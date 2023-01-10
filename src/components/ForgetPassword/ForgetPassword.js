@@ -321,7 +321,7 @@ return(
             </ul>
           </div>
         </div>
-        {/* Theme Color Settings End */}
+        {/* Theme Color Settings End. */}
       </div>
 
   </div>
