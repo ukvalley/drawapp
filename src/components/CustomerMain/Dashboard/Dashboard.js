@@ -24,7 +24,7 @@ export default function Dashbaord({handleNavbar})
 
   const [Balance,SetBalance] = useState(0);
 
-  let connection;
+  let connection;;
   let rpcUrl;
 
   useEffect(() => {
