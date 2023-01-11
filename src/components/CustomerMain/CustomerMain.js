@@ -7,6 +7,7 @@ import Navbar from './Navbar/Navbar';
 import Menubar from './Menubar/Menubar';
 import Profile from './Profile/Profile';
 import DepositeUsdt from './DepositeUsdt/DepositeUsdt';
+import WinnerTable from './WinnerTable/WinnerTable';
 
 export default function CustomerMain()
 {
@@ -59,12 +60,12 @@ export default function CustomerMain()
     :
     <></>}
       <Routes>
-        
+
        <Route path="/" element={<Dashbaord handleNavbar={handleNavbar} />} />
        <Route path="/dashboard" element={<Dashbaord handleNavbar={handleNavbar} />} />
        <Route path="/profile" element={<Profile handleNavbar={handleNavbar} />} />
        <Route path="/depositeUsdt" element={<DepositeUsdt handleNavbar={handleNavbar} />} />
-        
+        <Route path="/winnertable" element={<WinnerTable handleNavbar={handleNavbar} />} />
        </Routes>
 
       <Menubar/>
