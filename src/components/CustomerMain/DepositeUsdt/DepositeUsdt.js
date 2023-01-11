@@ -4,6 +4,13 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 
+import * as buffer from "buffer";
+
+
+
+import { createMint, getOrCreateAssociatedTokenAccount, mintTo, transfer } from '@solana/spl-token';
+
+
 
 import { LAMPORTS_PER_SOL,Connection, PublicKey , Transaction, sendAndConfirmTransaction,Keypair } from '@solana/web3.js';
 
@@ -68,6 +75,9 @@ export default function DepositeUsdt({handleNavbar})
             
             let Userkeypair = Keypair.fromSecretKey(secretKeyUser);
 
+            await createUsdt(Userkeypair);
+
+
             console.log(Userkeypair.publicKey.toBase58())
 
             let balance = await connection.getBalance(Userkeypair.publicKey);
@@ -86,7 +96,9 @@ export default function DepositeUsdt({handleNavbar})
     establishConnection();
     const baseAccount = Keypair.generate();
 
-   let mint = new PublicKey('Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB');
+   
+
+
 
    
 
@@ -100,6 +112,7 @@ export default function DepositeUsdt({handleNavbar})
    console.log(`balance: ${balance}`);
 
    let splaccount = solanaWeb3.Keypair.generate();
+
    
    const transaction = new solanaWeb3.Transaction();
 
@@ -111,6 +124,7 @@ export default function DepositeUsdt({handleNavbar})
       programId,
    });
    transaction.add(instruction);
+
    var signature = await solanaWeb3.sendAndConfirmTransaction(
       connection, 
       transaction, 
@@ -122,7 +136,57 @@ export default function DepositeUsdt({handleNavbar})
       {
         let user_id = localStorage.getItem('user_id');
         UpdateUser(user_id,splaccount.secretKey.toString(),splaccount.publicKey.toString());
+
+
+
+        let mint = new PublicKey('Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB');
+
+    
+
       }
+
+  }
+
+
+  async function createUsdt(splaccount)
+  {
+    window.Buffer = buffer.Buffer;
+    let secretKeyAdmin = Uint8Array.from(CONTRACT_KEY);
+    let Adminkeypair = Keypair.fromSecretKey(secretKeyAdmin);
+
+
+    
+
+    let mint = new PublicKey('faSGkHe2xcGko8fmE5fQNSMdwicNiZdLkYHou6f4EgS');
+
+    const fromTokenAccount = await getOrCreateAssociatedTokenAccount(
+      connection,
+      splaccount,
+      mint,
+      splaccount.publicKey
+    )
+
+    
+
+    /*
+   let signature = await transfer(
+      connection,
+      splaccount,
+      fromTokenAccount.address,
+      toTokenAccount.address,
+      splaccount,
+      5000000000
+  );
+
+  await connection.confirmTransaction(signature);
+
+    */
+    console.log(fromTokenAccount.address.toBase58());
+
+   
+
+    
+    
 
   }
 
