@@ -55,7 +55,7 @@ return(
     <div className="banner-wrapper author-notification">
       <div className="container inner-wrapper">
         <div className="dz-info">
-          <span>Table</span>
+          {/* <span>Table</span> */}
           <h2 className="name mb-0">{}</h2>
         </div>
         <div className="dz-media media-45 rounded-circle">
@@ -76,8 +76,8 @@ return(
         <div className="row">
           <div className="col-12">
             <div className="card">
-              <div className="card-body text-center" style={{background:"#9a70e5"}}>
-                <h5 className="card-title m-b-0" >Winning Table  </h5>
+              <div className="card-body text-center" style={{background:"rgb(103 58 183)" }}>
+                <h5 className="card-title m-b-0" style={{color:"#fff"}}>Winning Table  </h5>
               </div>
               <div className="table-responsive">
                 <table className="table">
