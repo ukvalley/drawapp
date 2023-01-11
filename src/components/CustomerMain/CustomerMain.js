@@ -6,6 +6,7 @@ import { Route, Routes,useNavigate } from 'react-router-dom';
 import Navbar from './Navbar/Navbar';
 import Menubar from './Menubar/Menubar';
 import Profile from './Profile/Profile';
+import DepositeUsdt from './DepositeUsdt/DepositeUsdt';
 
 export default function CustomerMain()
 {
@@ -55,13 +56,16 @@ export default function CustomerMain()
   <div className={styles.CustomerMain}>
     {navbarShow == true ?
     <Navbar handleNavbarOutclick={handleNavbarOutclick}/>
-    :<></>}
+    :
+    <></>}
       <Routes>
+        
        <Route path="/" element={<Dashbaord handleNavbar={handleNavbar} />} />
        <Route path="/dashboard" element={<Dashbaord handleNavbar={handleNavbar} />} />
        <Route path="/profile" element={<Profile handleNavbar={handleNavbar} />} />
-      
-      </Routes>
+       <Route path="/depositeUsdt" element={<DepositeUsdt handleNavbar={handleNavbar} />} />
+        
+       </Routes>
 
       <Menubar/>
   </div>
