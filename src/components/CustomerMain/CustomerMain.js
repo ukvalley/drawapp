@@ -68,7 +68,6 @@ export default function CustomerMain()
         <Route path="/winnertable" element={<WinnerTable handleNavbar={handleNavbar} />} />
        </Routes>
 
-      <Menubar/>
   </div>
 );
 }

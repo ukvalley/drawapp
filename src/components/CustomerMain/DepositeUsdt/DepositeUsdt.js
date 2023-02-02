@@ -368,7 +368,7 @@ return(
             <>
            
            <div className='text-center mt-1'> 
-              Deposit Your Fund
+              Deposit Your Fund (SOL USDT Network)
            </div>    
           
 <div style={{ height: "auto", margin: "0 auto", maxWidth: 150, width: "100%" }}>
@@ -381,7 +381,7 @@ return(
 </div>
 
   <div className='text-center mt-1'> 
-           {Data.Users.public_key}
+  <h6>{Data.Users.public_key}</h6> 
    </div>
             </>
             }

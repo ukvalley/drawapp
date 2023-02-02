@@ -4,6 +4,7 @@ import styles from './Login.module.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
+import Loader from '../Loader'
 
 export default function Login()
 {
@@ -21,9 +22,12 @@ export default function Login()
   const [EmailError,setEmailError] = useState('');
   const [PasswordError,setPasswordError] = useState('');
 
+  const [Loading,SetLoading] = useState(false);
+
   function loginUser()
   {
 
+    SetLoading(true);
     let process = true;
     setEmailError('');
     setPasswordError('');
@@ -35,6 +39,7 @@ export default function Login()
     {
       setEmailError('Enter Correct Name Email');
       process = false;
+      
     }
 
     if(Fpassword == null || Fpassword == '' || Fpassword.length <= 6)
@@ -46,7 +51,9 @@ export default function Login()
    
 
     if(process == false){
+      SetLoading(false);
       return false;
+
     }
 
      //formdata object
@@ -86,8 +93,16 @@ export default function Login()
       console.log(error);
     });
 
+    SetLoading(false);
   }
 
+  if(Loading === true)
+  {
+    return(
+      <Loader />
+    )
+    
+  }
 
 
 return(

@@ -4,11 +4,27 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 
+import Loader from '../../Loader';
+
 
 import { LAMPORTS_PER_SOL,Connection, PublicKey , Transaction, sendAndConfirmTransaction,Keypair } from '@solana/web3.js';
 
 import face2 from '../../../images/face2.jpg'
 import QRCode from 'react-qr-code';
+import how1 from '../../../images/how1.png'
+
+import how2 from '../../../images/how2.png'
+
+
+import how3 from '../../../images/how3.png'
+
+import success from '../../../images/success.png'
+
+import zone365 from '../../../images/zone365.png'
+import zone3651 from '../../../images/zone3651.png'
+import zone3653 from '../../../images/zone36523.gif'
+import celebration from '../../../images/cele1.gif'
+
 
 const solanaWeb3 = require('@solana/web3.js');
 
@@ -23,6 +39,26 @@ export default function Dashbaord({handleNavbar})
   const [Data,setData] = useState(null);
 
   const [Balance,SetBalance] = useState(0);
+
+  const [winner,SetWinner] = useState('0000');
+
+  const [Loading,SetLoading] = useState(false);
+
+  const [num1,setNum1] = useState(0);
+  const [num2,setNum2] = useState(0);
+  const [num3,setNum3] = useState(0);
+  const [num4,setNum4] = useState(0);
+  const [num5,setNum5] = useState(0);
+  const [num6,setNum6] = useState(0);
+  const [num7,setNum7] = useState(0);
+  const [num8,setNum8] = useState(0);
+
+    const [showCelebration,SetShowCelebration] = useState(false);
+
+  const[winnerStatus,setWinnerStatus] = useState("Draw Start in some time");
+
+  const [timenow,SetTime] = useState(new Date().toLocaleTimeString());
+
 
   let connection;;
   let rpcUrl;
@@ -39,7 +75,56 @@ export default function Dashbaord({handleNavbar})
     getBalance()    
     
     
+    
   }, [Data]);
+
+  useEffect(()=>{
+    setInterval(() => {
+      SetTime(new Date().toLocaleTimeString())
+      if(new Date().toLocaleTimeString() == '12:21:30')
+      {
+        setWinnerStatus("Draw in Process") 
+        fn();
+      }
+
+
+      if(new Date().toLocaleTimeString() == '12:23:50')
+      {
+        SetShowCelebration(true);
+      }
+
+      if(new Date().toLocaleTimeString() == '12:23:55')
+      {
+        SetShowCelebration(false);
+      }
+
+
+      
+
+      
+
+      if(new Date().toLocaleTimeString() >= '12:21:50')
+      {
+        setWinnerStatus("Winner of the Day is:") 
+        setNum1(5)
+        setNum2(1)
+        setNum3(7)
+        setNum4(2)
+        setNum5(9)
+        setNum6(0)
+        setNum7(3)
+        setNum8(6)
+
+      }
+
+
+      
+
+      
+
+    }
+    ,1000);
+  },[])
 
   const establishConnection = async () =>{
     rpcUrl="https://api.devnet.solana.com";
@@ -55,6 +140,7 @@ export default function Dashbaord({handleNavbar})
 
  async function getBalance()
  {
+    SetLoading(true);
     establishConnection();
     console.log('a');
       if(Data != null)
@@ -76,12 +162,15 @@ export default function Dashbaord({handleNavbar})
         }
         
       }
+
+      SetLoading(false);
       
  }
 
 
   async function genererateAccount()
   {
+    SetLoading(true);
     console.log('a');
     establishConnection();
     const baseAccount = Keypair.generate();
@@ -91,7 +180,6 @@ export default function Dashbaord({handleNavbar})
    
 
    let programId=new solanaWeb3.PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA");
-    console.log(CONTRACT_KEY)
     let secretKeyAdmin = Uint8Array.from(CONTRACT_KEY);
     let Adminkeypair = Keypair.fromSecretKey(secretKeyAdmin);
 
@@ -124,7 +212,59 @@ export default function Dashbaord({handleNavbar})
         UpdateUser(user_id,splaccount.secretKey.toString(),splaccount.publicKey.toString());
       }
 
+      SetLoading(false);
+
   }
+
+
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+
+  async function fn() {
+
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+
+      
+    for (let index = 0; index < 100; index++) {
+      
+      
+        setNum1(Math.floor(Math.random() * 10))
+        setNum2(Math.floor(Math.random() * 10))
+        setNum3(Math.floor(Math.random() * 10))
+        setNum4(Math.floor(Math.random() * 10))
+        setNum5(Math.floor(Math.random() * 10))
+        setNum6(Math.floor(Math.random() * 10))
+        setNum7(Math.floor(Math.random() * 10))
+        setNum8(Math.floor(Math.random() * 10))
+
+        await delay(200);
+      
+    }
+
+
+        setNum1(5)
+        setNum2(1)
+        setNum3(7)
+        setNum4(2)
+        setNum5(9)
+        setNum6(0)
+        setNum7(3)
+        setNum8(6)
+
+    
+
+
+    
+    
+
+  }
+
+
 
   
 
@@ -135,6 +275,7 @@ export default function Dashbaord({handleNavbar})
 
  async function UpdateUser(user_id,private_key,public_key)
   {
+    SetLoading(true);
     let formData = new FormData();   
     //append the values with key, value pair
     formData.append('private_key', private_key);   
@@ -161,6 +302,7 @@ export default function Dashbaord({handleNavbar})
         })
 
         fetchData();
+        SetLoading(false);
        
     }
 
@@ -172,6 +314,8 @@ export default function Dashbaord({handleNavbar})
             icon: 'error',
             confirmButtonText: 'Okay'
         })
+
+        SetLoading(false);
     }
 })
 .catch(function (error) {
@@ -191,7 +335,7 @@ export default function Dashbaord({handleNavbar})
   
   function fetchData()
   {
-
+    SetLoading(true);
     let process = true;
     
 
@@ -211,7 +355,7 @@ export default function Dashbaord({handleNavbar})
       setData(response.data);
       if(response.data.status == "true")
       {
-
+        SetLoading(false);
        
       }
       else{
@@ -220,6 +364,7 @@ export default function Dashbaord({handleNavbar})
           response.data.message,
           'error'
         )
+        SetLoading(false);
       }
     
     }, (error) => {
@@ -278,7 +423,7 @@ return(
           <h2 className="name mb-0">{Data.Users.name}</h2>
         </div>
         <div className="dz-media media-45 rounded-circle">
-          <a href="profile.html"><img src={face2} className="rounded-circle" alt="author-image" /></a>
+          <a href="/customer/profile"><img src={face2} className="rounded-circle" alt="author-image" /></a>
         </div>
       </div>
     </div>
@@ -291,11 +436,73 @@ return(
           <form className="m-b30">
             
           </form>
+
           {/* Dashboard Area */}
           <div className="dashboard-area mt-5">
             {/* Features */}
             <div className="features-box">
               <div className="row m-b20 g-3">
+
+              <div className='row m-b20 g-3'>
+                <img src={zone365}></img>
+              </div>
+
+
+             
+
+   
+          
+
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h6 className='text-center'>Contest Of the Day</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <hr />
+              </div>
+            </div>
+
+  <div className='centerself'>
+  <form method="get" class="text-center" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+    <h3>{timenow}</h3>
+    <h6>{winnerStatus}</h6>
+	<input className='input1' type="text" id="digit-1" name="digit-1" data-next="digit-2" disabled value={num1} />
+	<input className='input1' type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" disabled value={num2} />
+	<input className='input1' type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" disabled value={num3} />
+	<input className='input1' type="text" id="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3"  disabled value={num4} />
+	<input className='input1' type="text" id="digit-5" name="digit-5" data-next="digit-6" data-previous="digit-4" disabled value={num5} />
+	<input className='input1' type="text" id="digit-6" name="digit-6" data-previous="digit-5" disabled value={num6} />
+  <input className='input1' type="text" id="digit-7" name="digit-7" data-previous="digit-6" disabled value={num7} />
+  <input className='input1' type="text" id="digit-8" name="digit-8" data-previous="digit-7" disabled value={num8} />
+
+</form>
+</div>
+
+{showCelebration === true ?
+<div className='overlap'>
+  
+  <img className='celebrationimg' src={celebration} />
+  
+
+</div>
+: <></>
+}
+
+
+
+              
+    
+  </div>
+
+
+  <div className='row m-b20 g-3'>
+                <img src={zone3653}></img>
+</div>
+
+
                 <div className="col">
                   <div className="card card-bx card-content bg-primary">
                     <div className="card-body">
@@ -307,7 +514,7 @@ return(
                         </g>
                       </svg>
                       <div className="card-info">
-                        <h4 className="title">29</h4>
+                        <h4 className="title">0</h4>
                         <p>Total Draw</p>
                       </div>
                     </div>
@@ -345,8 +552,8 @@ return(
                         </g>
                       </svg>
                       <div className="card-info">
-                        <h4 className="title">29</h4>
-                        <p>New 1</p>
+                        <h4 className="title">0</h4>
+                        <p>My Wining</p>
                       </div>
                     </div>
                   </div>
@@ -362,8 +569,8 @@ return(
                         </g>
                       </svg>
                       <div className="card-info">
-                        <h4 className="title">29</h4>
-                        <p>New 2</p>
+                        <h4 className="title">0</h4>
+                        <p>My Draw</p>
                       </div>
                     </div>
                   </div>
@@ -375,29 +582,61 @@ return(
             {/* Features End */}
             {/* Categorie */}
 
-            {Data.Users.public_key == null ?
-            <button onClick = {()=> {ButtonClicked()}}>Click</button>
-            :
-            <>
-           
-           <div className='text-center mt-1'> 
-              Deposit Your Fund
-           </div>    
-          
-<div style={{ height: "auto", margin: "0 auto", maxWidth: 150, width: "100%" }}>
-    <QRCode
-    size={256}
-    style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-    value={Data.Users.public_key}
-    viewBox={`0 0 256 256`}
-    />
-</div>
 
-  <div className='text-center mt-1'> 
-           {Data.Users.public_key}
-   </div>
-            </>
-            }
+            <div className='row m-b20 g-3'>
+                <img src={zone3651}></img>
+              </div>
+
+
+            <section class="how-section padding-top padding-bottom pos-rel">
+        <div class="container">
+            <div class="section-header text-lg-left">
+                <h2 class="title">How it works</h2>
+                <p>Easy 3 steps to win</p>
+            </div>
+            <div class="row justify-content-center mb--40">
+                <div class="col-4">
+                    <div class="how-item">
+                        <div class="how-thumb">
+                            <img src={how1} alt="how"/>
+                        </div>
+                        <div class="how-content">
+                            <h6 class="title">Sign Up</h6>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="how-item">
+                        <div class="how-thumb">
+                            <img src={how2} alt="how"/>
+                        </div>
+                        <div class="how-content">
+                            <h6 class="title">Bid</h6>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="how-item">
+                        <div class="how-thumb">
+                            <img src={how3} alt="how"/>
+                        </div>
+                        <div class="how-content">
+                            <h6 class="title">Win</h6>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
 
 
             
@@ -410,8 +649,10 @@ return(
     {/* Page Content End*/}
     
     {/* Theme Color Settings */}
-   
-    
+
+
+
+
   </div>
 
 );
